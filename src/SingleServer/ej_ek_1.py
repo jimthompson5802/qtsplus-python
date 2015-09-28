@@ -1,4 +1,4 @@
-from QtPy.QtPyCommon import *
+from QtPyCommon import *
 #Other required imports
 from cmath import *
 import numpy as np

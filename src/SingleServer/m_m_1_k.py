@@ -1,10 +1,10 @@
 import numpy as np
 from math import exp
 import matplotlib.pyplot as plt
-from QtPyCommon import *
+import QtPyCommon as G
 from random import expovariate
 
-class M_M_1_K(GlobalParameters,BasicQueue):
+class M_M_1_K(G.GlobalParameters,G.BasicQueue):
     """
     M/M/1/K Model: Poisson Arrivals to a Space-Limited Single Exponential Server
 
@@ -21,7 +21,7 @@ class M_M_1_K(GlobalParameters,BasicQueue):
         K: size of queue
         """
         self.model_name = "M/M/1/K"
-        BasicQueue.__init__(self)
+        G.BasicQueue.__init__(self)
 
         self.lam = float(lam)
         self.st = float(st)
@@ -145,9 +145,9 @@ class M_M_1_K(GlobalParameters,BasicQueue):
 
         #compute Waiting time distribution Wq(t)
         #create parameter vectors
-        max_pts = GlobalParameters.max_plot_points
+        max_pts = G.GlobalParameters.max_plot_points
         #create vector of time points (t)
-        t_vec = generate_time_vector(max_t,max_pts)
+        t_vec = G.generate_time_vector(max_t,max_pts)
         Wq_tvec = [0.0] * (max_pts+1)
 
         #compute Wq(t)
@@ -169,7 +169,7 @@ class M_M_1_K(GlobalParameters,BasicQueue):
         self.simulation_maxNumber = max_simulate
 
         #set up simulation object
-        self.qsim =  BasicSimulator(self.sim,
+        self.qsim =  G.BasicSimulator(self.sim,
                           iat_fctn = self.iat_fctn,
                           iat_parms = self.iat_parms,
                           st_fctn = self.st_fctn,
@@ -182,7 +182,7 @@ class M_M_1_K(GlobalParameters,BasicQueue):
             
            
 if __name__ == "__main__":
-    QtPyGlobalParameters.simulation_checkpoint=25000
+    G.QtPyGlobalParameters.simulation_checkpoint=25000
     #QtPyGlobalParameters.TRACING=True
     q1 = M_M_1_K(2.0,0.8,5)
     #q1.st=18.0
@@ -203,6 +203,6 @@ if __name__ == "__main__":
     y2 = q1.sim.Pn[:,1]
 
 
-    side_by_side_barchart(x1,y1,x2,y2,label1="analytic",label2="simulation",n_incr=5)
+    G.side_by_side_barchart(x1,y1,x2,y2,label1="analytic",label2="simulation",n_incr=5)
 
     

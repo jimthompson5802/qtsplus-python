@@ -1,12 +1,12 @@
-from QtPyCommon import *
+import QtPyCommon as G
 #Other required imports
-from cmath import *
+import cmath as cm
 import numpy as np
 import scipy.optimize as opt
 import scipy.signal as sig
 
 
-class Ej_Ek_1(BasicQueue):
+class Ej_Ek_1(G.BasicQueue):
     """
     Ej/Ek/1 Model:  Erlang input to single-server queue, with Erlang service,
         unlimited capacity and FIFO discipline.
@@ -23,11 +23,11 @@ class Ej_Ek_1(BasicQueue):
         k: Erlang shape parameter for service process
         """
         self.model_name="Ej/Ek/1"
-        BasicQueue.__init__(self)
+        G.BasicQueue.__init__(self)
 
         #set up simulation parameters
-        self.iat_fctn = erlang_k
-        self.st_fctn = erlang_k
+        self.iat_fctn = G.erlang_k
+        self.st_fctn = G.erlang_k
         self.iat_parms = [[],[]]
         self.st_parms = [[],[]]
 
@@ -107,7 +107,7 @@ class Ej_Ek_1(BasicQueue):
         #check for stable queueing system
         self.an.rho = lam/mu
         if self.an.rho >= 1.0:
-            raise ServerUnstable("rho greater or equal to 1.0, rho=%g" % self.an.rho)
+            raise G.ServerUnstable("rho greater or equal to 1.0, rho=%g" % self.an.rho)
 
         ###
         #calculate roots of characteristic equation
@@ -201,8 +201,8 @@ class Ej_Ek_1(BasicQueue):
         CDFWqt: matrix of [t,Wq(t)]
         """
         #create vector of time points (t)
-        max_pts = GlobalParameters.max_plot_points
-        t_vec = generate_time_vector(max_t,max_pts)
+        max_pts = G.GlobalParameters.max_plot_points
+        t_vec = G.generate_time_vector(max_t,max_pts)
         self.an.CDFWqt = np.zeros(max_pts+1)
         r = self.an.resid
         p = self.an.poles
@@ -217,7 +217,7 @@ class Ej_Ek_1(BasicQueue):
         self.simulation_maxNumber = maxNumber
 
         #set up simulation object
-        self.qsim =  BasicSimulator(self.sim,
+        self.qsim =  G.BasicSimulator(self.sim,
                           iat_fctn = self.iat_fctn,
                           iat_parms = self.iat_parms,
                           st_fctn = self.st_fctn,
@@ -227,7 +227,7 @@ class Ej_Ek_1(BasicQueue):
         self.qsim.run_simulation(self.simulation_maxNumber,max_n,max_t)
             
 if __name__ == "__main__":
-    QtPyGlobalParameters.simulation_checkpoint = 50000
+    G.QtPyGlobalParameters.simulation_checkpoint = 50000
     q = Ej_Ek_1(6./5,5,2./3,3)   #example 6.3
     #q = Ej_Ek_1(2,3,0.3,2)      #Example 6.1
     q.solve()
@@ -239,7 +239,7 @@ if __name__ == "__main__":
     #q.CDF
     q.simulate(200000,max_t=5.0)
     q.print_results("simulation")
-    side_by_side_plot(q.an.CDFWqt[:,0],q.an.CDFWqt[:,1],
+    G.side_by_side_plot(q.an.CDFWqt[:,0],q.an.CDFWqt[:,1],
                       q.sim.CDFWqt[:,0],q.sim.CDFWqt[:,2],
                       label1="analytic",label2="simulation")
     

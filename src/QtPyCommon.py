@@ -6,7 +6,7 @@ from random import expovariate
 ###
 # Class to hold global parameters that affect run-time
 ###
-class GlobalParameters:
+class QtsGlobalParameters:
     """
     Container for the following parameters
     epsilon:  tolerance to determine convergence for numerical routines
@@ -38,7 +38,7 @@ class GlobalParameters:
 ###
 #instantiate Global Parameter object
 ###
-QtPyGlobalParameters = GlobalParameters()
+QtPyGlobalParameters = QtsGlobalParameters()
 
 
 ###
@@ -69,7 +69,7 @@ class BasicQueue():
     """
     model_name = ""
     def __init__(self):
-        self.gp = GlobalParameters()
+        self.gp = QtsGlobalParameters()
         # dictionary containing labels for each parameter
         self.parameter_labels = {}
 

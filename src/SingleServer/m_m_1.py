@@ -3,11 +3,12 @@
 import numpy as np
 from math import exp
 import matplotlib.pyplot as plt
-import QtPyCommon as G
+from QtPyCommon import BasicQueue, QtsGlobalParameters,generate_time_vector
+from QtPyCommon import BasicSimulator, side_by_side_barchart
 from random import expovariate
 
 
-class M_M_1(G.BasicQueue):
+class M_M_1(BasicQueue):
     """
     M/M/1 Model:  Poisson Arrivals to Single Exponential Server
 
@@ -25,7 +26,7 @@ class M_M_1(G.BasicQueue):
         st: mean service time
         """
         self.model_name="M/M/1"
-        G.BasicQueue.__init__(self)
+        BasicQueue.__init__(self)
 
         self.lam = float(lam)
         self.st = float(st)
@@ -131,7 +132,7 @@ class M_M_1(G.BasicQueue):
         CDFWqt: [t,Wq(t)]
         """
         #create vector of time points (t)
-        t_vec = G.generate_time_vector(max_t,G.GlobalParameters.max_plot_points)
+        t_vec = generate_time_vector(max_t,QtsGlobalParameters.max_plot_points)
 
         #define functions for W(t) and Wq(t)
         W_t = lambda t,lam,mu: 1.0 - exp(-(mu - lam)*t)
@@ -151,7 +152,7 @@ class M_M_1(G.BasicQueue):
         self.simulation_maxNumber = maxNumber
 
         #set up simulation object
-        self.qsim =  G.BasicSimulator(self.sim,
+        self.qsim =  BasicSimulator(self.sim,
                           iat_fctn = self.iat_fctn,
                           iat_parms = self.iat_parms,
                           st_fctn = self.st_fctn,
@@ -161,7 +162,7 @@ class M_M_1(G.BasicQueue):
         self.qsim.run_simulation(self.simulation_maxNumber,max_n,max_t)
         
 if __name__ == "__main__":
-    G.QtPyGlobalParameters.simulation_checkpoint = 25000
+    QtsGlobalParameters.simulation_checkpoint = 25000
     myq = M_M_1(3.0,0.2)
     myq.solve()
     myq.print_results("analytic")
@@ -178,7 +179,7 @@ if __name__ == "__main__":
     y2 = myq.sim.Pn[:,1]
 
 
-    G.side_by_side_barchart(x1,y1,x2,y2,label1="analytic",label2="simulation",n_incr=5)
+    side_by_side_barchart(x1,y1,x2,y2,label1="analytic",label2="simulation",n_incr=5)
     #plt.title('CDF Plot for analytic and simulation results')
     
     

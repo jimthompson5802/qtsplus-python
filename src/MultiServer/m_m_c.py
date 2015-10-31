@@ -1,10 +1,11 @@
-from QtPy.QtPyCommon import *
+from QtPyCommon import BasicQueue, QtsGlobalParameters, \
+    BasicSimulator, ServerUnstable
 #Other required imports
 import numpy as np
 from math import exp
 from random import expovariate
 
-class M_M_c(GlobalParameters,BasicQueue):
+class M_M_c(BasicQueue):
     """
     M/M/c Model:  M/M/c: Poisson Arrivals to Multiple Exponential Servers
 
@@ -137,7 +138,7 @@ class M_M_c(GlobalParameters,BasicQueue):
         CDF: matrix of [t,Wq(t)]
         """
         #create vector of time points (t)
-        max_pts = GlobalParameters.max_plot_points
+        max_pts = QtsGlobalParameters.max_plot_points
         incr = float(max_t)/max_pts
         n_vec = range(0,max_pts+1)
         t_vec = [incr] * (max_pts+1)
@@ -204,7 +205,7 @@ def M_M_c_Lq(r,c):
 
 
 if __name__ == "__main__":
-    QtPyGlobalParameters.simulation_checkpoint = 50000
+    QtsGlobalParameters.simulation_checkpoint = 25000
     q = M_M_c(5,1,8)
     q.solve()
     q.print_results()

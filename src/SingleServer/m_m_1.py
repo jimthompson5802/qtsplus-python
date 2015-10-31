@@ -3,7 +3,7 @@
 import numpy as np
 from math import exp
 from QtPyCommon import BasicQueue, QtsGlobalParameters,generate_time_vector, \
-    BasicSimulator, side_by_side_barchart
+    BasicSimulator, side_by_side_barchart, ServerUnstable
 from random import expovariate
 
 
@@ -180,6 +180,9 @@ if __name__ == "__main__":
 
     side_by_side_barchart(x1,y1,x2,y2,label1="analytic",label2="simulation",n_incr=5)
     #plt.title('CDF Plot for analytic and simulation results')
+    
+    M_M_1(1,3).solve()
+    
     
     
     

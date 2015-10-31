@@ -2,9 +2,8 @@
 
 import numpy as np
 from math import exp
-import matplotlib.pyplot as plt
-from QtPyCommon import BasicQueue, QtsGlobalParameters,generate_time_vector
-from QtPyCommon import BasicSimulator, side_by_side_barchart
+from QtPyCommon import BasicQueue, QtsGlobalParameters,generate_time_vector, \
+    BasicSimulator, side_by_side_barchart
 from random import expovariate
 
 

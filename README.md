@@ -7,6 +7,9 @@ Collection of Python modules that solve a variety of queueing models.  Models ba
 Python Version: 2.7
 Requires:
 * numpy
+
 * scipy
+
 * matplotlib
+
 * simpy (Version 2)
